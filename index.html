@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+        <title>Document</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+        <style>
+            .panel-2 {
+                display: none;
+            }
+
+            .panel-3 {
+                display: none;
+            }
+        </style>
+    </head>
+    <body class="bg-dark-subtle">
+        <main class="container panel-1">
+
+            <div class="input-group mb-3 mt-5 pt-5">
+                <span class="input-group-text">Type in your question that's answerable by Yes or No?</span>
+                <div class="form-floating">
+                    <input type="text" class="form-control" id="txtQuestion" placeholder="Your Question...">
+                    <label for="txtQuestion">Question</label>
+                </div>
+                <button type="button" class="btn btn-outline-dark" id="btnAnswer">Get answer!</button>
+            </div>
+            <div class="d-flex justify-content-center mt-5 pt-5">
+                <img src="https://images-eu.ssl-images-amazon.com/images/I/4107PjhZvfL.png" alt="bg-image">
+            </div>
+
+
+        </main>
+        <br>
+        <main class="container panel-2"></main>
+        <br>
+        <main class="container panel-3"></main>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+        <script>
+
+            document.getElementById("btnAnswer").addEventListener("click", () => {
+                if (document.querySelector("#txtQuestion").value != '') {
+                    fetch('https://yesno.wtf/api', {method: 'GET'}).then(function (response) {
+                        return response.json();
+                    }).then(function (json) {
+                        document.querySelector(".panel-1").style.display = 'none';
+
+                        document.querySelector(".panel-2").innerHTML = '<h1>' + json.answer + '</h1>';
+                        document.querySelector(".panel-2").style.display = 'flex';
+                        document.querySelector(".panel-2").style.justifyContent = 'center';
+
+
+                        document.querySelector(".panel-3").innerHTML = '<img src="' + json.image + '" alt="' + json.answer + '"/>';
+                        document.querySelector(".panel-3").style.display = 'flex';
+                        document.querySelector(".panel-3").style.justifyContent = 'center';
+                    });
+                } else {
+                    alert('Type in a question to proceed!')
+                }
+
+
+            })
+        </script>
+    </body>
+</html>
